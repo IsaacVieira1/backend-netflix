@@ -7,5 +7,5 @@
     "strict": true,          
     "esModuleInterop": true   
   },
-  "include": ["api/**/*"]     
+  "include": ["api/**/*", "index.ts"]     
 }

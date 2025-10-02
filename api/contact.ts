@@ -1,5 +1,7 @@
-import { VercelRequest, VercelResponse } from "@vercel/node";
+import express, { Request, Response } from "express";
 import axios from "axios";
+
+const router = express.Router();
 
 interface ContactData {
   name: string;
@@ -7,11 +9,7 @@ interface ContactData {
   whatsapp: string;
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ message: "Método não permitido" });
-  }
-
+router.post("/contact", async (req: Request, res: Response) => {
   const { name, email, whatsapp } = req.body as ContactData;
 
   if (!name || !email) {
@@ -66,4 +64,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.error(error.response?.data || error.message);
     return res.status(500).json({ message: "Erro ao adicionar contato", error: error.message });
   }
-}
+});
+
+export default router;
