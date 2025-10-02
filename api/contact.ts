@@ -44,7 +44,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({ message: "Contato adicionado!", data: response.data });
 
   } catch (error: any) {
-    // Se for duplicado, busca o contato existente
     if (error.response?.data?.errors?.[0]?.code === "duplicate") {
       try {
         const getContact = await axios.get(
