@@ -1,12 +1,11 @@
 {
   "name": "netflix-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend serverless para integração com ActiveCampaign",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js"
+    "dev": "vercel dev", 
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -14,15 +13,10 @@
   "type": "commonjs",
   "dependencies": {
     "@vercel/node": "^5.3.24",
-    "axios": "^1.12.2",
-    "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
-    "express": "^5.1.0"
+    "axios": "^1.12.2"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.3",
-    "@types/node": "^24.6.0",
+    "@types/node": "^20.11.30",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.2"
   }
