@@ -1,10 +1,21 @@
 import express from "express";
+import cors from "cors";
 import contactRouter from "./api/contact";
 
 const app = express();
+const PORT = process.env.PORT || 10000;
+
+app.use(cors()); // Permite requisições do frontend
 app.use(express.json());
 
-app.use("/api", contactRouter);
+// Rota raiz para teste
+app.get("/", (req, res) => {
+  res.send("Servidor rodando!");
+});
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+// Rotas da API
+app.use("/api/contact", contactRouter);
+
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});

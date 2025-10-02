@@ -1,7 +1,5 @@
-import express, { Request, Response } from "express";
+import { Router } from "express";
 import axios from "axios";
-
-const router = express.Router();
 
 interface ContactData {
   name: string;
@@ -9,7 +7,9 @@ interface ContactData {
   whatsapp: string;
 }
 
-router.post("/contact", async (req: Request, res: Response) => {
+const router = Router();
+
+router.post("/", async (req, res) => {
   const { name, email, whatsapp } = req.body as ContactData;
 
   if (!name || !email) {
@@ -40,7 +40,6 @@ router.post("/contact", async (req: Request, res: Response) => {
     );
 
     return res.status(200).json({ message: "Contato adicionado!", data: response.data });
-
   } catch (error: any) {
     if (error.response?.data?.errors?.[0]?.code === "duplicate") {
       try {
@@ -53,7 +52,6 @@ router.post("/contact", async (req: Request, res: Response) => {
             }
           }
         );
-
         return res.status(200).json({ message: "Contato já existe!", data: getContact.data });
       } catch (err: any) {
         console.error(err.response?.data || err.message);
