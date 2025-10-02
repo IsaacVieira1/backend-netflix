@@ -15,7 +15,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { name, email, whatsapp } = req.body as ContactData;
 
   if (!name || !email) {
-    return res.status(400).json({ message: "Nome e email são obrigatórios" });
+    return res.status(400).json({ message: "Nome e email são obrigatórios" })
   }
 
   const [firstName, ...rest] = name.split(" ");
