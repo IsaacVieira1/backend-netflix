@@ -23,6 +23,14 @@
     "@types/express": "^5.0.3",
     "@types/node": "^24.6.0",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.9.2"
-  }
+    "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IsaacVieira1/backend-netflix.git"
+  },
+  "bugs": {
+    "url": "https://github.com/IsaacVieira1/backend-netflix/issues"
+  },
+  "homepage": "https://github.com/IsaacVieira1/backend-netflix#readme"
 }
