@@ -19,3 +19,4 @@ app.use("/api/contact", contact_1.default);
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
+
