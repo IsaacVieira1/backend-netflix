@@ -5,61 +5,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
-const dotenv_1 = __importDefault(require("dotenv"));
-const axios_1 = __importDefault(require("axios"));
-dotenv_1.default.config();
+const contact_1 = __importDefault(require("./api/contact"));
 const app = (0, express_1.default)();
-const PORT = process.env.PORT || 5000;
-app.use((0, cors_1.default)({ origin: "*" }));
+const PORT = process.env.PORT || 10000;
+app.use((0, cors_1.default)()); // Permite requisições do frontend
 app.use(express_1.default.json());
-app.post("/subscribe", async (req, res) => {
-    const { name, email, whatsapp } = req.body;
-    if (!name || !email) {
-        return res.status(400).json({ message: "Nome e email são obrigatórios" });
-    }
-    const [firstName, ...rest] = name.split(" ");
-    const lastName = rest.join(" ");
-    try {
-        // Tenta criar contato
-        const response = await axios_1.default.post(process.env.ACTIVECAMPAIGN_URL, {
-            contact: {
-                email,
-                firstName,
-                lastName,
-                phone: whatsapp,
-                tags: ["novo-usuario"]
-            }
-        }, {
-            headers: {
-                "Api-Token": process.env.ACTIVECAMPAIGN_API_KEY,
-                "Content-Type": "application/json"
-            }
-        });
-        return res.status(200).json({ message: "Contato adicionado!", data: response.data });
-    }
-    catch (error) {
-        // Se for duplicado, busca o contato existente
-        if (error.response?.data?.errors?.[0]?.code === "duplicate") {
-            try {
-                const getContact = await axios_1.default.get(`${process.env.ACTIVECAMPAIGN_URL}?email=${encodeURIComponent(email)}`, {
-                    headers: {
-                        "Api-Token": process.env.ACTIVECAMPAIGN_API_KEY,
-                        "Content-Type": "application/json"
-                    }
-                });
-                // Retorna OK mesmo sendo duplicado
-                return res.status(200).json({
-                    message: "Contato já existe!",
-                    data: getContact.data
-                });
-            }
-            catch (err) {
-                console.error(err.response?.data || err.message);
-                return res.status(500).json({ message: "Erro ao buscar contato existente", error: err.message });
-            }
-        }
-        console.error(error.response?.data || error.message);
-        return res.status(500).json({ message: "Erro ao adicionar contato", error: error.message });
-    }
+// Rota raiz para teste
+app.get("/", (req, res) => {
+    res.send("Servidor rodando!");
 });
-app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+// Rotas da API
+app.use("/api/contact", contact_1.default);
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+});
